@@ -1,3 +1,4 @@
+/*
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
@@ -112,4 +113,45 @@ int main() {
     
     return 0;
 }
+*/
+
+#include<iostream>
+using namespace std;
+int main(){
+	int n1=3, n2=4;
+	if(n1>n2){
+		cout<<"n1 es mayor que n2 \n";
+	}else{
+		cout<<"n2 es mayor que n1 \n";
+	}
+	//cout<<"Hola mundo \n";
+	return 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

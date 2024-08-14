@@ -53,7 +53,6 @@ void insertarPosicionMedia(Tlista &lista,int valor){
 	q = new Nodo();
 	q->dato= valor;
 	q->siguiente = NULL;
-	
 	actual = lista;
 	while(actual!=NULL){
 		medida++;
