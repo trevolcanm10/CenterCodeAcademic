@@ -1,6 +1,4 @@
 (function() {
-
-    
     const btnEliminacion = document.querySelectorAll(".btnEliminacion");
 
     btnEliminacion.forEach(btn => {
