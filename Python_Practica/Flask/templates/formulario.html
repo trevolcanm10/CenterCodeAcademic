@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block title %} Saludar - mi sitio web{% endblock %}
+
+{% block contenido %}
+<form method="POST" action= "/submit">
+    <label for = "name">Nombre:</label>
+    <input type="text" id="name" name="namef" required>
+    <button type="submit">Enviar</button>
+{% endblock %}
