@@ -1,0 +1,6 @@
+requests
+python-dotenv
+rich
+gpt4all
+openai
+transformers
