@@ -4,12 +4,15 @@ import argparse#Argumentos que el usuario pasa al ejecutar el programa
 from transformers import GPT2Tokenizer
 from openai import OpenAI
 from dotenv import load_dotenv
+
+
 class SmartSearch:
     
     #Pasa un parámetro de dirección del archivo
     def __init__(self,dir_path):
         self.dir_path = dir_path
         self.files = self._read_files()
+        self.client = OpenAI() #Cliente del OpenAI
 
     def _read_files(self):
         """Lee el contenido de los ficheros que estan en los direcctorios"""
@@ -58,9 +61,6 @@ class SmartSearch:
             file_segments = self._split_file(text, model_name)
             #Cargamos las variables de entorno 
             load_dotenv()
-            #Inicializamos el cliente de OpenAI
-            client = OpenAI()
-
             resultados_segmentos = []
 
             for index,segment in enumerate(file_segments):
@@ -94,9 +94,6 @@ class SmartSearch:
         return [file_text[i:i+context_window_sizes[model_name]]
                 for i in range(0,len(file_text),context_window_sizes[model_name])]
         
-            
-
-
     def _calcular_coste(self,text,prompt,model_name,max_tokens):
         """Calcula el coste para un modelo de open AI"""
         precios = {
@@ -118,32 +115,3 @@ class SmartSearch:
 
         return (len_tokens_prompt + len_tokens_prompt , input_cost + output_cost)
     
-
-
-
-if __name__ =='__main__':
-    #Configuramos los argumentos del programa
-    parser = argparse.ArgumentParser(description="Esta herramienta realiza busquedas en los ficheros de un directorio.")
-    parser.add_argument("--dir_path", type=str, help="La ruta al direcctorio donde se encuentran los ficheros.")
-    parser.add_argument("-r", "--regex", type = str,help="La expresion regular para realizar la busqueda.")
-    parser.add_argument("-p","--prompt",type=str,help="Para realizar la búsqueda con gpt.")
-    parser.add_argument("-m","--model",type=str,default='gpt-3.5-turbo-0125',help="El nombre del model OpenAI para realizar la búsqueda.")
-    parser.add_argument("--max-tokens",type=int,default=100,help="Numero maximo de tokens en la prediccion/generacion.")
-    #Parseamos los argumentos
-    args = parser.parse_args()
-
-    if args.regex:
-        searcher = SmartSearch(args.dir_path)
-        resultados = searcher.regex_search(args.regex)
-
-        for file,results in resultados.items():
-            print(file)
-            for r in results:
-                print(f"\t- {r}")
-    if args.prompt:
-        searcher=SmartSearch(args.dir_path)
-        resultados = searcher.ia_search(args.prompt,args.model,args.max_tokens)
-        for file,results in resultados.items():
-            print(file)
-            for r in results:
-                print(f"\t- {r}")
